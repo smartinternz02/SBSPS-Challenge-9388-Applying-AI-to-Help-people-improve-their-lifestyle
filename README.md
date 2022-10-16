@@ -527,69 +527,7 @@ Audio diffusion from Flavio Schneider
 
 Mini Imagen from Ryan O. | AssemblyAI writeup
 
-Todo
 
- use huggingface transformers for T5-small text embeddings
- add dynamic thresholding
- add dynamic thresholding DALLE2 and video-diffusion repository as well
- allow for one to set T5-large (and perhaps small factory method to take in any huggingface transformer)
- add the lowres noise level with the pseudocode in appendix, and figure out what is this sweep they do at inference time
- port over some training code from DALLE2
- need to be able to use a different noise schedule per unet (cosine was used for base, but linear for SR)
- just make one master-configurable unet
- complete resnet block (biggan inspired? but with groupnorm) - complete self attention
- complete conditioning embedding block (and make it completely configurable, whether it be attention, film etc)
- consider using perceiver-resampler from https://github.com/lucidrains/flamingo-pytorch in place of attention pooling
- add attention pooling option, in addition to cross attention and film
- add optional cosine decay schedule with warmup, for each unet, to trainer
- switch to continuous timesteps instead of discretized, as it seems that is what they used for all stages - first figure out the linear noise schedule case from the variational ddpm paper https://openreview.net/forum?id=2LdBqxc1Yv
- figure out log(snr) for alpha cosine noise schedule.
- suppress the transformers warning because only T5encoder is used
- allow setting for using linear attention on layers where full attention cannot be used
- force unets in continuous time case to use non-fouriered conditions (just pass the log(snr) through an MLP with optional layernorms), as that is what i have working locally
- removed learned variance
- add p2 loss weighting for continuous time
- make sure cascading ddpm can be trained without text condition, and make sure both continuous and discrete time gaussian diffusion works
- use primer's depthwise convs on the qkv projections in linear attention (or use token shifting before projections) - also use new dropout proposed by bayesformer, as it seems to work well with linear attention
- explore skip layer excitation in unet decoder
- accelerate integration
- build out CLI tool and one-line generation of image
- knock out any issues that arised from accelerate
- add inpainting ability using resampler from repaint paper https://arxiv.org/abs/2201.09865
- build a simple checkpointing system, backed by a folder
- add skip connection from outputs of all upsample blocks, used in unet squared paper and some previous unet works
- add fsspec, recommended by Romain @rom1504, for cloud / local file system agnostic persistence of checkpoints
- test out persistence in gcs with https://github.com/fsspec/gcsfs
- extend to video generation, using axial time attention as in Ho's video ddpm paper
- allow elucidated imagen to generalize to any shape
- allow for imagen to generalize to any shape
- add dynamic positional bias for the best type of length extrapolation across video time
- move video frames to sample function, as we will be attempting time extrapolation
- attention bias to null key / values should be a learned scalar of head dimension
- add self-conditioning from bit diffusion paper, already coded up at ddpm-pytorch
- reread cogvideo and figure out how frame rate conditioning could be used
- bring in attention expertise for self attention layers in unet3d
- consider bringing in NUWA's 3d convolutional attention
- consider transformer-xl memories in the temporal attention blocks
- consider perceiver-ar approach to attending to past time
- frame dropouts during attention for achieving both regularizing effect as well as shortened training time
- investigate frank wood's claims https://github.com/lucidrains/flexible-diffusion-modeling-videos-pytorch and either add the hierarchical sampling technique, or let people know about its deficiencies
- make sure inpainting works with video
- offer challenging moving mnist (with distractor objects) as a one-line trainable baseline for researchers to branch off of for text to video
- build out CLI tool for training, resuming training off config file
- preencoding of text to memmapped embeddings
- be able to create dataloader iterators based on the old epoch style, also configure shuffling etc
- be able to also pass in arguments (instead of requiring forward to be all keyword args on model)
- bring in reversible blocks from revnets for 3d unet, to lessen memory burden
- add ability to only train super-resolution network
- read dpm-solver see if it is applicable to continuous time gaussian diffusion
- allow for conditioning video frames with arbitrary absolute times (calculate RPE during temporal attention)
- accommodate dream booth fine tuning
- add textual inversion
- cleanup self conditioning to be extracted at imagen instantiation
- incorporate all learnings from make-a-video (https://makeavideo.studio/)
- add v-parameterization (https://arxiv.org/abs/2202.00512) from imagen video paper, the only thing new
-Citations
 
 @inproceedings{Saharia2022PhotorealisticTD,
     title   = {Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding},
