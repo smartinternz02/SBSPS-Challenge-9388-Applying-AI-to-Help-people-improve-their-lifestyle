@@ -1,4 +1,4 @@
-magen - Pytorch
+Imagen - Pytorch
 
 Implementation of Imagen, Google's Text-to-Image Neural Network that beats DALL-E2, in Pytorch. It is the new SOTA for text-to-image synthesis.
 
